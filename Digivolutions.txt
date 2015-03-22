@@ -1,0 +1,74 @@
+ID: 0
+Name: Egg
+Previous: None
+Next: 1,2
+
+ID: 1
+Name: Zurumon
+Previous: 0
+Next: 4
+
+ID: 2
+Name: Punimon
+Previous: 0
+Next: ?
+
+ID: 3
+Name: Botomon
+Previous: 0
+Next: ?
+
+ID: 4
+Name: Pagumon
+Previous: 1
+Next: ?
+
+ID: 5
+Name: Tsunomon
+Previous: 2
+Next: ?
+
+ID: 6
+Name: Koromon
+Previous: 3
+Next: ?
+
+ID: 7
+Name: Gotsumon
+Previous: 4
+Next: ?
+
+ID: 8
+Name: Goblimon
+Previous: 4
+Next: ?
+
+ID: 9
+Name: DemiDevimon
+Previous: 4
+Next: ?
+
+ID: 10
+Name: Elecmon
+Previous: 5
+Next: ?
+
+ID: 11
+Name: Gabumon
+Previous: 5
+Next: ?
+
+ID: 12
+Name: Augumon
+Previous: 6
+Next: ?
+
+ID: 13
+Name:
+Previous:
+Next:
+
+ID: 14
+Name:
+Previous:
+Next:

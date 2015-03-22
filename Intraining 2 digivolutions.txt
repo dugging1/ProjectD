@@ -1,0 +1,79 @@
+Kapurimon
+- Armadimon (30 earth + 10 beast)
+- Gotsumon (20 Machine + 20 earth)
+- Toy Agumon (20 Dragon + 20 machine)
+- Hagurumon (40 machine)
+
+Koromon
+- V-mon (40 Dragon)
+- Yukiaugumon (20 Water + 20 Dragon)
+- Black Augumon (20 dragon + 20 Dark)
+- Augumon (40 dragon)
+- Toy Agumon (20 Dragon + 20 machine)
+
+Sunmon
+- Guilmon (40 Dragon)
+- Plotmon (40 Holy)
+- Coronamon (20 dragon + 20 beast)
+
+Tanemon
+- Floramon (40 Insect)
+- Mushmon (30 insect + 10 dark)
+- Alraumon (30 earth + 10 dark)
+- Palmon (40 earth)
+
+Tsunomon
+- Gaomon (30 beast + 10 earth)
+- Gabumon (40 beast)
+- Psychemon (30 beast + 10 dark)
+- Elecmon (20 beast + 20 machine)
+
+Tokomon
+- V-mon (40 Dragon)
+- Bakumon (30 holy + 10 beast)
+- Terriermon (40 Beast)
+- Patamon (40 holy)
+
+Nyaromon
+- Terriermon (40 Beast)
+- Salamon (20 beast + 20 holy)
+- Gizamon (20 Water + 20 beast)
+- Renamon (30 beast + 10 holy)
+
+Pagumon
+- Gazimon (30 Beast + 10 dark)
+- Goblimon (30 dark + 10 earth)
+- DemiDevimon (40 Dark)
+- Tsukaimon (30 dark + 10 bird)
+
+Pyocomon
+- Falcomon (30 bird + 10 dark)
+- Floramon (40 Insect)
+- DemiDevimon (40 Dark)
+- Piyomon (40 bird)
+
+Pukamon
+- Gomamon (40 water)
+- Kamemon (30 water + 10 beast)
+- YukiAugumon (20 Dragon + 20 water)
+- Gizamon (20 water + 20 beast)
+
+DemiMeramon
+- Guilmon (40 Dragon)
+- Coronamon (20 dragon + 20 beast)
+- DemiDevimon (40 Dark)
+- Candlemon (20 dragon + 20 earth)
+
+Babydmon
+- Otamamon (40 water)
+- Dracomon (40 dragon)
+
+Moonmon
+- Gazimon (20 Beast + 20 water)
+- Black Agumon (20 dragon + 20 dark)
+- Lunamon (40 dark)
+
+Motimon
+- Kamemon (30 Water + 10 beast)
+- Tentomon (30 Insect + 10 machine)
+- Kunemon (40 Insect)

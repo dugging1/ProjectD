@@ -1,0 +1,59 @@
+Zurumon
+-Kapurimon(20 Machine)
+-Pagumon(20 dark)
+-Motimon(20 insect)
+
+Chromomon
+-Pagumon(20 dark)
+-Motimon(20 insect)
+-kapurimon(20 machine)
+
+Nyokimon
+-pyocomon(20 insect)
+-koromon(20 dragon)
+-tanemon(20 earth)
+
+Babumon
+-Motimon(20 insect)
+-Pyocomon(20 bird)[Pyocomon -> Biomon]
+-Tanemon(20 earth)
+
+Pichimon
+-Pukumon(20 water)
+-Tsunomon(20 beast)
+-Tokomon(20 holy)
+
+Petitemon
+-Babydmon(20 dragon)
+
+Punimon
+-Pukamon(20 water)
+-Nyaromon(20 beast)
+-Demimeramon(20 dragon)
+
+Botomon
+-Tokomon(20 holy)
+-Pagumon(20 dark)
+-Koromon(20 dragon)
+
+poyomon
+-Tokomon(20 holy)
+-Motimon(20 machine)
+-Pukamon(20 water)
+-Nyaromon(20 beast)
+
+Mokumon
+-Kapurimon(20 Machine)
+-Demimeramon(10 dragon + 10 dark)
+-Koromon(20 dragon)
+-Sunmon(20 holy)
+
+Yukimibotomon
+-Tsunomon(20 Beast)
+-Moonmon(20 dark)
+-Nyaromon(20 beast)
+
+Yaramon
+-Demimeramon(10 dragon + 10 dark)
+-Koromon(20 dragon)
+-Tanemon(20 earth)
