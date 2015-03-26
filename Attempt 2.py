@@ -31,19 +31,17 @@ class World():
         self.createtree()
 
     def move(self, direction, newpos):
-        print("OldPos: " + str(direction))
-        print("NewPos: " + str(newpos))
         if direction == "N":
-            if newpos[1] == len(self.map[0]):
+            if newpos[1] == len(self.map[0])-1:
                 self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][0].Mon
-                self.map[newpos[0]][0] = None
+                self.map[newpos[0]][0].Mon = None
                 self.map[newpos[0]][newpos[1]].initialupdate()
                 self.map[newpos[0]][0].initialupdate()
             else:
-                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]-1].Mon
-                self.map[newpos[0]][newpos[1]-1].Mon = None
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]+1].Mon
+                self.map[newpos[0]][newpos[1]+1].Mon = None
                 self.map[newpos[0]][newpos[1]].initialupdate()
-                self.map[newpos[0]][newpos[1]-1].initialupdate()
+                self.map[newpos[0]][newpos[1]+1].initialupdate()
         elif direction == "E":
             if newpos[0] == 0:
                 self.map[newpos[0]][newpos[0]].Mon = self.map[len(self.map)-1][newpos[1]].Mon
@@ -57,17 +55,17 @@ class World():
                 self.map[newpos[0]-1][newpos[1]].initialupdate()
         elif direction == "S":
             if newpos[1] == 0:
-                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][len(self.map[0])].Mon
-                self.map[newpos[0]][len(self.map[0])].Mon = None
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][len(self.map[0])-1].Mon
+                self.map[newpos[0]][len(self.map[0])-1].Mon = None
                 self.map[newpos[0]][newpos[1]].initialupdate()
-                self.map[newpos[0]][len(self.map[0])].initialupdate()
+                self.map[newpos[0]][len(self.map[0])-1].initialupdate()
             else:
-                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]+1].Mon
-                self.map[newpos[0]][newpos[1]+1].Mon = None
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]-1].Mon
+                self.map[newpos[0]][newpos[1]-1].Mon = None
                 self.map[newpos[0]][newpos[1]].initialupdate()
-                self.map[newpos[0]][newpos[1]+1].initialupdate()
+                self.map[newpos[0]][newpos[1]-1].initialupdate()
         elif direction == "W":
-            if newpos[0] == len(self.map):
+            if newpos[0] == len(self.map)-1:
                 self.map[newpos[0]][newpos[0]].Mon = self.map[0][newpos[1]].Mon
                 self.map[0][newpos[1]].Mon = None
                 self.map[newpos[0]][newpos[1]].initialupdate()
@@ -92,6 +90,7 @@ class World():
                         self.map[x][y].Mon.digivolve()
                         self.map[x][y].Mon.eat()
                         self.map[x][y].Mon.move()
+                        self.map[x][y].initialupdate()
 
     def createfood(self):
         while self.food < int((len(self.map)*len(self.map[1]))*0.1):
@@ -148,9 +147,6 @@ class World():
         self.Digivolutions[tempid][0].append([self.Digimon[0], [1, 1, 1, 1, 1, 1, 1, 1]])
 
     def digivolve(self, pos, nextid, energy):
-        #print("Digivolution at: (" + str(pos[0]) + "," + str(pos[1]) + ")")
-        #print("Digimon name: " + str(self.map[pos[0]][pos[1]].Mon.Name))
-        #print("Digivolving to: " + str(self.Digimon[nextid].Name))
         self.map[pos[0]][pos[1]].Mon = self.Digimon[nextid]
         self.map[pos[0]][pos[1]].Mon.Energy = energy
         self.map[pos[0]][pos[1]].Mon.Position = pos
@@ -232,39 +228,36 @@ class Mon():
                         order.append([distance, a])
                         break
 
-        if order[0][1][0] > self.Position[0]:
-            #move down
-            if self.Position[1] + 1 == len(self.Position[2].map):
-                self.Position[1] = 0
-            else:
-                self.Position[1] += 1
-            self.Position[2].move("S", self.Position)
-            pass
-        elif order[0][1][0] < self.Position[0]:
-            #move up
-            if self.Position[1] - 1 < 0:
-                self.Position[1] = len(self.Position[2].map)-1
-            else:
-                self.Position[1] -= 1
-            self.Position[2].move("N", self.Position)
-            pass
+        print("Current position: " + str(self.Position))
+        print("Order: " + str(order))
+
+        if order[0][1][0] > self.Position[0]:   #Go Right
+            if self.Position[0] == len(self.Position[2].map)-1: #If on far right of map
+                self.Position[0] = 0 #Loop to far left
+            else: #If anywhere but far right of map
+                self.Position[0] += 1 #Move 1 tile to right
+            self.Position[2].move("E", self.Position)
+        elif order[0][1][0] < self.Position[0]: #Go Left
+            if self.Position[0] == 0:   #If on far left of map
+                self.Position[0] = len(self.Position[2].map)-1 #Set to far right of map
+            else:   #If anywhere but far left of map
+                self.Position[0] -= 1   #Move 1 tile to left
+            self.Position[2].move("W", self.Position)
+        elif order[0][1][0] == self.Position[0]: #Go Up or Down
+            if order[0][1][1] > self.Position[1]:   #Go down
+                if self.Position[1] == len(self.Position[2].map[0])-1:  #If on far bottom
+                    self.Position[1] = 0    #Set to far top
+                else:   #If anywhere but far bottom
+                    self.Position[1] += 1   #Move 1 tile down
+                self.Position[2].move("S", self.Position)
+            elif order[0][1][1] < self.Position[1]: #Go Up
+                if self.Position[1] == 0:   #If on far top
+                    self.Position[1] = len(self.Position[2].map[0])-1   #Set to far bottom
+                else:   #If anywhere but far top
+                    self.Position[1] -= 1   #Move 1 tile up
+                self.Position[2].move("N", self.Position)
         else:
-            if order[0][1][1] > self.Position[1]:
-                #move right
-                if self.Position[0] + 1 == len(self.Position[2].map[1]):
-                    self.Position[0] = 0
-                else:
-                    self.Position[0] += 1
-                self.Position[2].move("E", self.Position)
-                pass
-            elif order[0][1][1] < self.Position[1]:
-                #move left
-                if self.Position[1] - 1 < 0:
-                    self.Position[0] = len(self.Position[2].map[1])-1
-                else:
-                    self.Position[0] -= 1
-                self.Position[2].move("W", self.Position)
-                pass
+            print("WHAT DO YOU WANT FROM ME?!?!?!?")
 
         self.targets = targets
         self.order = order
@@ -318,6 +311,6 @@ class Display():
 test = World()
 test.createfood()
 test.digivolve([1, 1, test], 1, [5, 5, 5, 5, 5, 5, 5, 5])
-test.move("N", [1, 0, test])
-#test.simulate(10)
+#test.move("N", [1, 0, test])
+test.simulate(10)
 Display.map(test)
