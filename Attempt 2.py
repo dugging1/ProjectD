@@ -1,3 +1,5 @@
+from math import fabs
+
 __author__ = 'dugging'
 from tkinter import *
 from random import *
@@ -28,8 +30,59 @@ class World():
         self.createtemplates()
         self.createtree()
 
+    def move(self, direction, newpos):
+        print("OldPos: " + str(direction))
+        print("NewPos: " + str(newpos))
+        if direction == "N":
+            if newpos[1] == len(self.map[0]):
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][0].Mon
+                self.map[newpos[0]][0] = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]][0].initialupdate()
+            else:
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]-1].Mon
+                self.map[newpos[0]][newpos[1]-1].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]][newpos[1]-1].initialupdate()
+        elif direction == "E":
+            if newpos[0] == 0:
+                self.map[newpos[0]][newpos[0]].Mon = self.map[len(self.map)-1][newpos[1]].Mon
+                self.map[len(self.map)-1][newpos[1]].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[len(self.map)-1][newpos[1]].initialupdate()
+            else:
+                self.map[newpos[0]][newpos[0]].Mon = self.map[newpos[0]-1][newpos[1]].Mon
+                self.map[newpos[0]-1][newpos[1]].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]-1][newpos[1]].initialupdate()
+        elif direction == "S":
+            if newpos[1] == 0:
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][len(self.map[0])].Mon
+                self.map[newpos[0]][len(self.map[0])].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]][len(self.map[0])].initialupdate()
+            else:
+                self.map[newpos[0]][newpos[1]].Mon = self.map[newpos[0]][newpos[1]+1].Mon
+                self.map[newpos[0]][newpos[1]+1].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]][newpos[1]+1].initialupdate()
+        elif direction == "W":
+            if newpos[0] == len(self.map):
+                self.map[newpos[0]][newpos[0]].Mon = self.map[0][newpos[1]].Mon
+                self.map[0][newpos[1]].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[0][newpos[1]].initialupdate()
+            else:
+                self.map[newpos[0]][newpos[0]].Mon = self.map[newpos[0]+1][newpos[1]].Mon
+                self.map[newpos[0]+1][newpos[1]].Mon = None
+                self.map[newpos[0]][newpos[1]].initialupdate()
+                self.map[newpos[0]+1][newpos[1]].initialupdate()
+        else:
+            print("Invalid direction")
+
     def simulate(self, iterations):
         for a in range(iterations):
+            print("Time: " + str(self.Time))
             self.Time += 1
             self.heat()
             self.createfood()
@@ -38,6 +91,7 @@ class World():
                     if self.map[x][y].Mon is not None:
                         self.map[x][y].Mon.digivolve()
                         self.map[x][y].Mon.eat()
+                        self.map[x][y].Mon.move()
 
     def createfood(self):
         while self.food < int((len(self.map)*len(self.map[1]))*0.1):
@@ -47,7 +101,6 @@ class World():
                 if self.map[x][y].Item is None:
                     self.map[x][y].Item = Food([5, 5, 5, 5, 5, 5, 5, 5])
                     self.food += 1
-                    print("Food made at: (" + str(x) + "," + str(y) + ")")
                     self.map[x][y].initialupdate()
                     break
 
@@ -95,9 +148,13 @@ class World():
         self.Digivolutions[tempid][0].append([self.Digimon[0], [1, 1, 1, 1, 1, 1, 1, 1]])
 
     def digivolve(self, pos, nextid, energy):
+        #print("Digivolution at: (" + str(pos[0]) + "," + str(pos[1]) + ")")
+        #print("Digimon name: " + str(self.map[pos[0]][pos[1]].Mon.Name))
+        #print("Digivolving to: " + str(self.Digimon[nextid].Name))
         self.map[pos[0]][pos[1]].Mon = self.Digimon[nextid]
         self.map[pos[0]][pos[1]].Mon.Energy = energy
         self.map[pos[0]][pos[1]].Mon.Position = pos
+        self.map[pos[0]][pos[1]].Mon.NewPosition = pos
         self.map[pos[0]][pos[1]].initialupdate()
 
 
@@ -149,7 +206,68 @@ class Mon():
         self.Level = level
         self.Attribute = attribute
         self.Position = position
+        self.Position = position
         self.Energy = energy
+
+    def move(self):
+        targets = []
+        order = []
+        for x in range(len(self.Position[2].map)):
+            for y in range(len(self.Position[2].map[x])):
+                if self.Position[2].map[x][y].Item is not None:
+                    targets.append([x, y])
+        for a in targets:
+            distance = fabs(self.Position[0]-a[0]) + fabs(self.Position[1]-a[1])
+            if len(order) == 0:
+                order.append([distance, a])
+            else:
+                for b in range(len(order)):
+                    if distance < order[b][0]:
+                        order.insert(b, [distance, a])
+                        break
+                    elif distance == order[b][0]:
+                        order.insert(b+1, [distance, a])
+                        break
+                    else:
+                        order.append([distance, a])
+                        break
+
+        if order[0][1][0] > self.Position[0]:
+            #move down
+            if self.Position[1] + 1 == len(self.Position[2].map):
+                self.Position[1] = 0
+            else:
+                self.Position[1] += 1
+            self.Position[2].move("S", self.Position)
+            pass
+        elif order[0][1][0] < self.Position[0]:
+            #move up
+            if self.Position[1] - 1 < 0:
+                self.Position[1] = len(self.Position[2].map)-1
+            else:
+                self.Position[1] -= 1
+            self.Position[2].move("N", self.Position)
+            pass
+        else:
+            if order[0][1][1] > self.Position[1]:
+                #move right
+                if self.Position[0] + 1 == len(self.Position[2].map[1]):
+                    self.Position[0] = 0
+                else:
+                    self.Position[0] += 1
+                self.Position[2].move("E", self.Position)
+                pass
+            elif order[0][1][1] < self.Position[1]:
+                #move left
+                if self.Position[1] - 1 < 0:
+                    self.Position[0] = len(self.Position[2].map[1])-1
+                else:
+                    self.Position[0] -= 1
+                self.Position[2].move("W", self.Position)
+                pass
+
+        self.targets = targets
+        self.order = order
 
     def eat(self):
         if self.Position[2].map[self.Position[0]][self.Position[1]].Item is not None:
@@ -198,6 +316,8 @@ class Display():
                 Label(gui, text=str(world.map[x][y].Initial)).grid(column=x, row=y)
 
 test = World()
-test.map[1][1].Item = Food([5, 5, 5, 5, 5, 5, 5, 5])
+test.createfood()
 test.digivolve([1, 1, test], 1, [5, 5, 5, 5, 5, 5, 5, 5])
-#Display.map(test)
+test.move("N", [1, 0, test])
+#test.simulate(10)
+Display.map(test)

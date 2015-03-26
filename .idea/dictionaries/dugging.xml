@@ -18,6 +18,7 @@
       <w>digivolvecheck</w>
       <w>digivolved</w>
       <w>digivolvestats</w>
+      <w>digivolving</w>
       <w>eastwieght</w>
       <w>elecmon</w>
       <w>emaptrans</w>
@@ -31,12 +32,17 @@
       <w>koromon</w>
       <w>mapdigimon</w>
       <w>mapfood</w>
+      <w>newpos</w>
       <w>northwieght</w>
+      <w>numchecked</w>
+      <w>oldpos</w>
       <w>pagumon</w>
       <w>punimon</w>
       <w>southwieght</w>
       <w>surroundcheck</w>
+      <w>tempa</w>
       <w>tempid</w>
+      <w>temppos</w>
       <w>tsunomon</w>
       <w>westwieght</w>
       <w>worldx</w>
